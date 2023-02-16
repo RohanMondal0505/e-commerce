@@ -19,6 +19,6 @@ Install my-project with npm
 
 ## Packages Used in this project
 
-**Client:** react, react-redux, @reduxjs/toolkit, bootstrap, node-sass,react-bootstrap, react-dom, react-router-dom, react-router-bootstrap
+**Client:** react, react-redux, @reduxjs/toolkit, redux-persist, bootstrap, node-sass,react-bootstrap, react-dom, react-router-dom, react-router-bootstrap
 
 **Server:** bcrypt, cloudinary, cors, dotenv, express, mongoose, socket.io, strip, validator

@@ -1,35 +1,66 @@
 import React from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import "../style/Navigation.scss"
+import { logout } from "../features/UserSlice";
+import "../style/Navigation.scss";
 
 const Navigation = () => {
+	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+
+	const handelLogout = () => dispatch(logout());
+
 	return (
-		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0 }}>
-			<Container>
+		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)" }}>
+			<Container fluid className="mx-5">
 				<LinkContainer to="/">
 					<Navbar.Brand>Ecommerce</Navbar.Brand>
 				</LinkContainer>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="me-auto">
-						<LinkContainer to="/">
-							<Nav.Link>Home</Nav.Link>
-						</LinkContainer>
-						<LinkContainer to="/login">
-							<Nav.Link>Login</Nav.Link>
-						</LinkContainer>
-						<LinkContainer to="/signup">
-							<Nav.Link>Signup</Nav.Link>
-						</LinkContainer>
-						<Nav.Link href="#link">Link</Nav.Link>
-						<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-							<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-						</NavDropdown>
+					<Nav className="d-flex justify-content-between" style={{ width: "100%" }}>
+						<div className="d-flex">
+							<LinkContainer to="/">
+								<Nav.Link>Home</Nav.Link>
+							</LinkContainer>
+							{/* if no user */}
+							{!user && (
+								<LinkContainer to="/login">
+									<Nav.Link>Login</Nav.Link>
+								</LinkContainer>
+							)}
+						</div>
+						{/* if  user */}
+						{user && (
+							<NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
+								{user.isAdmin && (
+									<>
+										<LinkContainer to="/dashboard">
+											<NavDropdown.Item>Dashboard</NavDropdown.Item>
+										</LinkContainer>
+										<LinkContainer to="/new-product">
+											<NavDropdown.Item>New Product</NavDropdown.Item>
+										</LinkContainer>
+									</>
+								)}
+
+								{!user.isAdmin && (
+									<>
+										<LinkContainer to="/cart">
+											<NavDropdown.Item>Cart</NavDropdown.Item>
+										</LinkContainer>
+										<LinkContainer to="/orders">
+											<NavDropdown.Item>My Orders</NavDropdown.Item>
+										</LinkContainer>
+									</>
+								)}
+								<NavDropdown.Divider />
+								<Button variant="danger" onClick={handelLogout} className="logout-btn">
+									Logout
+								</Button>
+							</NavDropdown>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

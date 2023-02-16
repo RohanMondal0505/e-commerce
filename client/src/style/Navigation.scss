@@ -1,11 +1,23 @@
-div.container{
-    margin: 0 18px;
+div.container {
+	margin: 0 18px;
 }
 
 .navbar-nav {
-    text-align: center;
+	text-align: center;
 
 	a {
 		min-width: 60px;
+	}
+}
+
+.dropdown-menu  {
+	text-align: center;
+}
+
+.dropdown{
+	text-align: left;
+
+	.logout-btn{
+		width: 80%;
 	}
 }

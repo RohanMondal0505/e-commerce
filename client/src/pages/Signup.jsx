@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSignupMutation } from "../service/api";
 import "../style/Signup.scss";
 
 const Signup = () => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [signup, { error, isLoading, isError }] = useSignupMutation();
 
-	const handelSubmit = (e) => {
+	const handelSignup = (e) => {
 		e.preventDefault();
+		signup({ name, email, password });
 	};
+
 	return (
 		<Container>
 			<Row>
 				<Col md={6} className="signup__form--container">
-					<Form style={{ width: "100%", textAlign: "center" }}>
+					<Form style={{ width: "100%", textAlign: "center" }} onSubmit={handelSignup}>
 						<h1>Create a account</h1>
+						{isError && <Alert variant="danger">{error.data}</Alert>}
 						<Form.Group>
 							<Form.Label>Name</Form.Label>
 							<Form.Control
@@ -24,7 +29,7 @@ const Signup = () => {
 								placeholder="Enter name"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
-								require
+								required={true}
 							/>
 						</Form.Group>
 
@@ -35,7 +40,7 @@ const Signup = () => {
 								placeholder="Enter email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								require
+								required={true}
 							/>
 						</Form.Group>
 
@@ -46,12 +51,14 @@ const Signup = () => {
 								placeholder="Password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								require
+								required={true}
 							/>
 						</Form.Group>
 
 						<Form.Group>
-							<Button type="submit">Login</Button>
+							<Button type="submit" disabled={isLoading}>
+								Create account
+							</Button>
 						</Form.Group>
 						<p>
 							Already have an account? <Link to="/login">Login</Link>

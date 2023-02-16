@@ -38,12 +38,13 @@ const Home = () => {
 					<h2>Categories</h2>
 					<Row>
 						{categories.map((category, index) => (
-							<LinkContainer to={`/category/${category.name.toLocaleLowerCase()}`}>
+							<LinkContainer to={`/category/${category.name.toLocaleLowerCase()}`} key={index}>
 								<Col md={4}>
 									<div
 										style={{
 											backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)) ,url(${category.img})`,
 											gap: "10px",
+											boxShadow: "5px 5px 5px 2px rgba(0,0,0,0.4)",
 										}}
 										className="category-tile">
 										{category.name}

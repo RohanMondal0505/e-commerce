@@ -14,7 +14,7 @@ const Login = () => {
 		<Container>
 			<Row>
 				<Col md={6} className="login__form--container">
-					<Form style={{ with: "100%", textAlign:'center' }}>
+					<Form style={{ with: "100%", textAlign: "center" }}>
 						<h1>Login to your account</h1>
 						<Form.Group>
 							<Form.Label>Email address</Form.Label>
@@ -23,7 +23,7 @@ const Login = () => {
 								placeholder="Enter email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								require
+								required={true}
 							/>
 						</Form.Group>
 
@@ -34,7 +34,7 @@ const Login = () => {
 								placeholder="Password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								require
+								required={true}
 							/>
 						</Form.Group>
 

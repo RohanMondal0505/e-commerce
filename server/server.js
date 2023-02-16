@@ -16,7 +16,7 @@ const userRoutes = require("./routes/userRoutes");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 
 
 server.listen(8080, () => {
