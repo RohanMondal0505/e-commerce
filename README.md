@@ -2,7 +2,7 @@
 
 # It is a Full Stack MERN Project
 
-### It containe main two folder
+### It contained main two folder
     1. client
     2. server
 
