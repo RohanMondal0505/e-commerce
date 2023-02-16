@@ -1,0 +1,32 @@
+.signup__image--container {
+	background-image: url("https://images.unsplash.com/photo-1612690669207-fed642192c40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8dGVjaHxlbnwwfDF8MHx3aGl0ZXw%3D&auto=format&fit=crop&w=800&q=60");
+	height: calc(100vh - 56px);
+	background-size: cover;
+}
+
+.login__image--container {
+	background-image: url("https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+	height: calc(100vh - 56px);
+	background-size: cover;
+}
+
+.signup__form--container,
+.login__form--container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: calc(100vh - 56px);
+	justify-content: center;
+}
+
+@media screen and (max-width: 756px) {
+	.signup__image--container,
+	.login__image--container {
+		display: none;
+	}
+}
+
+.login__form--container div,
+.signup__form--container div {
+	margin: 15px 0;
+}
