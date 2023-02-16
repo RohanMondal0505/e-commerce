@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 // appApi
 import appApi from "../service/api";
 
+const initialState = null;
+
 const UserSlice = createSlice({
 	name: "user",
-	initialState: [],
+	initialState,
 	reducers: {
-		logout: ()=> initialState,
+		logout: () => {
+			return null;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addMatcher(appApi.endpoints.signup.matchFulfilled, (_, { payload }) => payload);
@@ -15,5 +19,5 @@ const UserSlice = createSlice({
 	},
 });
 
-export const { logout} = UserSlice.actions;
+export const { logout } = UserSlice.actions;
 export default UserSlice.reducer;

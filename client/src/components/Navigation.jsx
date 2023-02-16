@@ -2,14 +2,19 @@ import React from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../features/UserSlice";
 import "../style/Navigation.scss";
 
 const Navigation = () => {
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	const handelLogout = () => dispatch(logout());
+	const handelLogout = () => {
+		dispatch(logout());
+		navigate("/");
+	};
 
 	return (
 		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)" }}>

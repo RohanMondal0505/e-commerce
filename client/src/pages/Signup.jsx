@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignupMutation } from "../service/api";
 import "../style/Signup.scss";
 
@@ -10,9 +10,12 @@ const Signup = () => {
 	const [password, setPassword] = useState("");
 	const [signup, { error, isLoading, isError }] = useSignupMutation();
 
-	const handelSignup = (e) => {
+	const navigate = useNavigate();
+
+	const handelSignup = async (e) => {
 		e.preventDefault();
-		signup({ name, email, password });
+		let s = await signup({ name, email, password });
+		if (s.data) return navigate("/");
 	};
 
 	return (

@@ -14,6 +14,7 @@ router.post("/signup", async (req, res) => {
 			password,
 		});
 		res.json(user);
+		
 	} catch (error) {
 		if (error.code === 11000) return res.status(400).send("Email already exists.....");
 		res.status(400).send(error.message);
