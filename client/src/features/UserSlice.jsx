@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // appApi
 import appApi from "../service/api";
 
-const initialState = null;
+const initialState = [];
 
 const UserSlice = createSlice({
 	name: "user",
