@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "../axios";
 import categories from "../Categories";
+import ProductPreview from "../components/ProductPreview";
+import { updateProducts } from "../features/productSlice";
 import "../style/Home.scss";
 
 const Home = () => {
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.products);
+	const lastProducts = products.slice(0, 8);
+
+	useEffect(() => {
+		axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
+	}, []);
+
 	return (
 		<>
 			<div className="Home d-flex flex-column align-items-center">
@@ -16,6 +28,11 @@ const Home = () => {
 				<div className="featured-products-container container mt-4 text-center">
 					<h2>Last products</h2>
 					{/* last products here */}
+					<div className="d-flex justify-content-center flex-wrap">
+						{lastProducts.map((product) => (
+							<ProductPreview {...product} key={product._id} />
+						))}
+					</div>
 					<div>
 						<Link
 							to="/category/all"

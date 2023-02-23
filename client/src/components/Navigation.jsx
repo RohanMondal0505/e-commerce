@@ -17,7 +17,7 @@ const Navigation = () => {
 	};
 
 	return (
-		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)" }}>
+		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)", zIndex:99999999}}>
 			<Container fluid className="mx-5">
 				<LinkContainer to="/">
 					<Navbar.Brand>Ecommerce</Navbar.Brand>

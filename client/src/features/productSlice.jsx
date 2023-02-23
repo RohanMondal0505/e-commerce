@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // appApi
-import  appApi  from "../service/api";
 
 const ProductSlice = createSlice({
 	name: "products",
 	initialState: [],
-	reducers: {	},
+	reducers: {
+		updateProducts: (_, action) => {
+			return action.payload;
+		},
+	},
 });
 
-export const {  } = ProductSlice.actions;
+export const { updateProducts } = ProductSlice.actions;
 export default ProductSlice.reducer;

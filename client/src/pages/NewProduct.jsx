@@ -10,7 +10,7 @@ const NewProduct = () => {
 	const [description, setDescription] = useState("");
 	const [price, setPrice] = useState("");
 	const [category, setCategory] = useState("");
-	const [image, setImage] = useState([]);
+	const [images, setImages] = useState([]);
 	const [imgToRemove, setImgToRemove] = useState(null);
 	const [createProduct, { isError, isLoading, isSuccess, error }] = useCreateProductMutation();
 
@@ -24,7 +24,7 @@ const NewProduct = () => {
 			},
 			(error, result) => {
 				if (!error && result.event === "success") {
-					setImage((prev) => [...prev, { url: result.info.url, public_id: result.info.public_id }]);
+					setImages((prev) => [...prev, { url: result.info.url, public_id: result.info.public_id }]);
 				}
 			}
 		);
@@ -37,26 +37,26 @@ const NewProduct = () => {
 			.delete(`/images/${imageObj.public_id}/`)
 			.then((response) => {
 				setImgToRemove(null);
-				setImage((prev) => prev.filter((image) => image.public_id !== imageObj.public_id));
+				setImages((prev) => prev.filter((image) => image.public_id !== imageObj.public_id));
 			})
 			.catch((error) => console.log(error));
 	};
-
+	
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		createProduct({
-				name,
-				description,
-				price,
-				category,
-				image
+			name,
+			description,
+			price,
+			category,
+			images,
 		})
-			.then((data) => {
-				console.log(data)
+			.then(({ data }) => {
 				if (data.length > 0) {
+					console.log(data);
 					setTimeout(() => {
 						navigate("/");
-					}, 15000);
+					}, 1500);
 				}
 			})
 			.catch((error) => console.log(error));
@@ -71,10 +71,10 @@ const NewProduct = () => {
 	return (
 		<>
 			<Container>
-				<Row >
+				<Row>
 					<Col md={6} className="new-product__from--container">
 						<Form style={{ with: "100%", textAlign: "center" }} onSubmit={handleSubmit}>
-							<h1>Create Product</h1>
+							<h1 className="mt-4">Create Product</h1>
 							{isError && <Alert variant="danger">{error.data}</Alert>}
 							{isSuccess && <Alert variant="success">Product Created</Alert>}
 
@@ -126,16 +126,18 @@ const NewProduct = () => {
 									Upload Images
 								</Button>
 								<div className="image-preview-container ">
-									{image.map((image, index) => (
+									{images.map((image, index) => (
 										<div className="image-preview">
 											<img src={image.url} alt="product image" />
-											<i class="fa-solid fa-circle-xmark" onClick={() => handelRemove(image)}></i>
+											{imgToRemove != image.public_id && (
+												<i class="fa-solid fa-circle-xmark" onClick={() => handelRemove(image)}></i>
+											)}
 										</div>
 									))}
 								</div>
 							</Form.Group>
 
-							<Form.Group>
+							<Form.Group className="mb-5">
 								<Button type="submit" disabled={isLoading || isSuccess}>
 									Add Product
 								</Button>

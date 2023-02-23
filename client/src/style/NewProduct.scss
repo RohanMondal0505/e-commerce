@@ -36,3 +36,10 @@
     background-position: center;
     height: 100vh;
 }
+
+
+@media screen and (max-width: 756px) {
+	.new-product__image--container {
+		display: none;
+	}
+}
