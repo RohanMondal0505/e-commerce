@@ -15,14 +15,12 @@ const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRouters");
 const imageRoute = require("./routes/imageRoutes");
 
-
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 app.use("/images", imageRoute);
-
 
 server.listen(8080, () => {
 	console.log("Server is running on port 8080");

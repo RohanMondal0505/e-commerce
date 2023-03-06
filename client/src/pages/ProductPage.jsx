@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
-import { Col, Container, Row } from "react-bootstrap";
+import "react-alice-carousel/lib/alice-carousel.css";
+import { Badge, Button, ButtonGroup, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import SimilarProducts from "../components/SimilarProducts";
+import "../style/ProductPage.scss";
 
 const ProductPage = () => {
 	const { id } = useParams();
@@ -14,29 +17,36 @@ const ProductPage = () => {
 	const [similar, setSimilar] = useState(null);
 
 	const handelDragStart = (e) => e.preventDefault();
+
 	useEffect(() => {
-		axios.get(`/product/${id}`).then(({ data }) => {
+		axios.get(`/products/${id}`).then(({ data }) => {
 			setProduct(data.product);
 			setSimilar(data.similar);
 		});
 	}, [id]);
 
+	if (!product) {
+		return <Loading />;
+	}
+
+	const responsive = {
+		0: {items: 1},
+		568: {items: 2},
+		1024: {items: 3},
+	}
+
 	const images = product.pictures.map((picture) => (
 		<img src={picture.url} alt={picture.alt} className="product__carousel--image" onDragStart={handelDragStart} />
-    ));
-    
-	if (!product) {
-		return <Loading/>;
-    }
-    
-    let similarProducts = [];
-    if (similar) {
-        similarProducts = similar.map((product, idx) => (
-            <div className="item" data-value={idx}>
-                <SimilarProducts/>
-            </div>
-        ))
-    }
+	));
+
+	let similarProducts = [];
+	if (similar) {
+		similarProducts = similar.map((product, idx) => (
+			<div className="item" data-value={idx}>
+				<SimilarProducts {...product} />
+			</div>
+		));
+	}
 
 	return (
 		<Container className="pt-4" style={{ position: "relative" }}>
@@ -44,7 +54,42 @@ const ProductPage = () => {
 				<Col lg={6}>
 					<AliceCarousel mouseTracking items={images} controlsStrategy="alternative" />
 				</Col>
+				<Col lg={6} className="pt-4 ps-5 text-center">
+					<h1>{product.name}</h1>
+					<p>
+						<Badge bg="primary">{product.category}</Badge>
+					</p>
+					<p className="product_price">${product.price}</p>
+					<p style={{ textAlign: "justify" }} className="py-3">
+						<strong>Description:</strong> {product.description}
+					</p>
+					{user && !user.isAdmin && (
+						<ButtonGroup style={{ width: "100%" }}>
+							<Form.Select size="lg" style={{ width: "40%", borderRadius: "0" }}>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</Form.Select>
+							<Button size="lg" disabled={!user}>
+								Add to cart
+							</Button>
+						</ButtonGroup>
+					)}
+					{user && user.isAdmin && (
+						<LinkContainer to={`/product/${product._id}/edit`}>
+							<Button size="lg">Edit Product</Button>
+						</LinkContainer>
+					)}
+				</Col>
 			</Row>
+			<div className="my-4">
+				<h2>Similar Products</h2>
+				<div className="d-flex justify-content-center align-items-center flex-wrap">
+					<AliceCarousel mouseTracking items={similarProducts} responsive={responsive} controlsStrategy="alternative"/>
+				</div>
+			</div>
 		</Container>
 	);
 };

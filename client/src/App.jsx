@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import Login from "./pages/Login.jsx";
 import NewProduct from "./pages/NewProduct";
+import ProductPage from "./pages/ProductPage";
 import Signup from "./pages/Signup.jsx";
 
 const App = () => {
@@ -22,7 +23,11 @@ const App = () => {
 							<Route path="/signup" element={<Signup />} />
 						</>
 					)}
+
+					<Route path="/product/:id" element={<ProductPage />} />
+
 					<Route path="/new-product" element={<NewProduct />} />
+					
 					<Route path="*" element={<Home />} />
 				</Routes>
 			</BrowserRouter>

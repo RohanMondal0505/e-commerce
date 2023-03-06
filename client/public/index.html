@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TIME TOURS</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+				font-size: 20px;
+			}
+			.mainContainer {
+				padding: 10px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			.group {
+				padding: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 400px;
+			}
+			.group label,
+			input {
+				flex-basis: 50%;
+			}
+			.btn {
+				position: relative;
+				left: 1160px;
+			}
+			.container {
+				width: 50%;
+				margin: 50px auto;
+				padding: 10px;
+				border: 3px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mainContainer" id="mainContainer">
+			<div class="group">
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" />
+			</div>
+			<div class="group">
+				<label for="qualification">Qualification</label>
+				<input type="text" name="qualification" id="qualification" />
+			</div>
+			<div class="group">
+				<label for="hobbies1">Hobbies</label>
+				<input type="text" name="hobbies1" id="hobbies1" />
+			</div>
+		</div>
+		<button class="btn" onclick="addHobbies()">+ Add Hobbies</button>
+
+		<div class="container">
+			<p>I, <span class="d_name">__________</span>, would like to apply for an internship at your organization.</p>
+			<br /><br />
+
+			<p>My Qualification is <span id="d_qualification">__________</span>.</p>
+			<br /><br />
+
+			<p>My hobbies are <span id="d_hobbies">__________, __________ & __________</span>.</p>
+			<br /><br />
+
+			<p>
+				Thanking you, <br />
+				Your Sincerely <br />
+				<span class="d_name">__________</span>
+			</p>
+		</div>
+
+		<script>
+			let name = "";
+			let qualification = "";
+			let hobbies;
+			let counter = 1;
+
+			function callFunction() {
+				document.querySelectorAll("#mainContainer input[type=text]").forEach((e) => {
+					e.onkeyup = function () {
+						add();
+					};
+				});
+			}
+
+			function addHobbies() {
+				counter += 1;
+				html =
+					'<div class="group">\
+                    <label for="hobbies' +
+					counter +
+					'">Hobbies</label>\
+                    <input type="text" name="hobbies' +
+					counter +
+					'" id="hobbies' +
+					counter +
+					'" />\
+                    </div>';
+				document.getElementById("mainContainer").insertAdjacentHTML("beforeend", html);
+				callFunction();
+			}
+
+			function add() {
+				name = document.getElementById("name").value;
+				qualification = document.getElementById("qualification").value;
+				hobbies = [];
+				for (let i = 1; i <= counter; i++) {
+					if (document.getElementById("hobbies" + i).value != "")
+						hobbies.push(document.getElementById("hobbies" + i).value);
+				}
+
+				if (name.length == 0) {
+					document.querySelectorAll(".d_name").forEach((e) => (e.innerText = "__________"));
+				} else {
+					document.querySelectorAll(".d_name").forEach((e) => (e.innerText = name));
+				}
+
+				if (qualification.length == 0) {
+					document.getElementById("d_qualification").innerText = "__________";
+				} else {
+					document.getElementById("d_qualification").innerText = qualification;
+				}
+
+				if (hobbies.length == 0) {
+					document.getElementById("d_hobbies").innerText = "__________, __________ & __________";
+				} else if (hobbies.length == 1) {
+					document.getElementById("d_hobbies").innerText = hobbies;
+				} else {
+					document.getElementById("d_hobbies").innerText = "";
+					for (let i = 0; i < hobbies.length - 2; i++) {
+						document.getElementById("d_hobbies").append(hobbies[i], ", ");
+					}
+					document.getElementById("d_hobbies").innerText += `${hobbies[hobbies.length - 2]} `;
+					document.getElementById("d_hobbies").innerText += ` &  ${hobbies[hobbies.length - 1]}`;
+				}
+			}
+
+			callFunction();
+		</script>
+	</body>
+</html>
