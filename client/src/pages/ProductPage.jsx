@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import SimilarProducts from "../components/SimilarProducts";
+import { ToastMessage } from "../components/ToastMessage";
+import { useAddToCartMutation } from "../service/api";
 import "../style/ProductPage.scss";
 
 const ProductPage = () => {
@@ -15,6 +17,7 @@ const ProductPage = () => {
 	const user = useSelector((state) => state.user);
 	const [product, setProduct] = useState(null);
 	const [similar, setSimilar] = useState(null);
+	const [addToCart, { isSuccess }] = useAddToCartMutation();
 
 	const handelDragStart = (e) => e.preventDefault();
 
@@ -30,10 +33,10 @@ const ProductPage = () => {
 	}
 
 	const responsive = {
-		0: {items: 1},
-		568: {items: 2},
-		1024: {items: 3},
-	}
+		0: { items: 1 },
+		568: { items: 2 },
+		1024: { items: 3 },
+	};
 
 	const images = product.pictures.map((picture) => (
 		<img src={picture.url} alt={picture.alt} className="product__carousel--image" onDragStart={handelDragStart} />
@@ -72,7 +75,17 @@ const ProductPage = () => {
 								<option value="4">4</option>
 								<option value="5">5</option>
 							</Form.Select>
-							<Button size="lg" disabled={!user}>
+							<Button
+								size="lg"
+								disabled={!user}
+								onClick={() =>
+									addToCart({
+										userId: user._id,
+										productId: id,
+										price: product.price,
+										image: product.pictures[0].url,
+									})
+								}>
 								Add to cart
 							</Button>
 						</ButtonGroup>
@@ -82,12 +95,13 @@ const ProductPage = () => {
 							<Button size="lg">Edit Product</Button>
 						</LinkContainer>
 					)}
+					{isSuccess && <ToastMessage title="Added to cart" bg="info" body={`${product.name} is in your cart`} />}
 				</Col>
 			</Row>
 			<div className="my-4">
 				<h2>Similar Products</h2>
 				<div className="d-flex justify-content-center align-items-center flex-wrap">
-					<AliceCarousel mouseTracking items={similarProducts} responsive={responsive} controlsStrategy="alternative"/>
+					<AliceCarousel mouseTracking items={similarProducts} responsive={responsive} controlsStrategy="alternative" />
 				</div>
 			</div>
 		</Container>

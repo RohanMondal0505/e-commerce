@@ -17,7 +17,10 @@ const Navigation = () => {
 	};
 
 	return (
-		<Navbar bg="light" expand="lg" style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)", zIndex:99999999}}>
+		<Navbar
+			bg="light"
+			expand="lg"
+			style={{ position: "sticky", top: 0, boxShadow: "0 0 10px 3px rgba(0,0,0,0.5)", zIndex: 99999999 }}>
 			<Container fluid className="mx-5">
 				<LinkContainer to="/">
 					<Navbar.Brand>Ecommerce</Navbar.Brand>
@@ -37,35 +40,50 @@ const Navigation = () => {
 							)}
 						</div>
 						{/* if  user */}
-						{user && (
-							<NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
-								{user.isAdmin && (
-									<>
-										<LinkContainer to="/dashboard">
-											<NavDropdown.Item>Dashboard</NavDropdown.Item>
-										</LinkContainer>
-										<LinkContainer to="/new-product">
-											<NavDropdown.Item>New Product</NavDropdown.Item>
-										</LinkContainer>
-									</>
-								)}
+						<div className="d-flex">
+							{user && !user.isAdmin && (
+								<LinkContainer to="/cart">
+									<Nav.Link>
+										<i className="fas fa-shopping-cart"></i>
+										{user?.cart.count > 0 && (
+											<span className="badge badge-warning" id="cartCount">
+												{user.cart.count}
+											</span>
+										)}
+									</Nav.Link>
+								</LinkContainer>
+							)}
 
-								{!user.isAdmin && (
-									<>
-										<LinkContainer to="/cart">
-											<NavDropdown.Item>Cart</NavDropdown.Item>
-										</LinkContainer>
-										<LinkContainer to="/orders">
-											<NavDropdown.Item>My Orders</NavDropdown.Item>
-										</LinkContainer>
-									</>
-								)}
-								<NavDropdown.Divider />
-								<Button variant="danger" onClick={handelLogout} className="logout-btn">
-									Logout
-								</Button>
-							</NavDropdown>
-						)}
+							{user && (
+								<NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
+									{user.isAdmin && (
+										<>
+											<LinkContainer to="/dashboard">
+												<NavDropdown.Item>Dashboard</NavDropdown.Item>
+											</LinkContainer>
+											<LinkContainer to="/new-product">
+												<NavDropdown.Item>New Product</NavDropdown.Item>
+											</LinkContainer>
+										</>
+									)}
+
+									{!user.isAdmin && (
+										<>
+											<LinkContainer to="/cart">
+												<NavDropdown.Item>Cart</NavDropdown.Item>
+											</LinkContainer>
+											<LinkContainer to="/orders">
+												<NavDropdown.Item>My Orders</NavDropdown.Item>
+											</LinkContainer>
+										</>
+									)}
+									<NavDropdown.Divider />
+									<Button variant="danger" onClick={handelLogout} className="logout-btn">
+										Logout
+									</Button>
+								</NavDropdown>
+							)}
+						</div>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import ScrollToTop from "./components/ScrollToTop";
+import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import Home from "./pages/Home";
 import Login from "./pages/Login.jsx";
@@ -16,7 +17,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<BrowserRouter>
-				<ScrollToTop/>
+				<ScrollToTop />
 				<Navigation />
 				<Routes>
 					<Route index element={<Home />} />
@@ -24,6 +25,12 @@ const App = () => {
 						<>
 							<Route path="/login" element={<Login />} />
 							<Route path="/signup" element={<Signup />} />
+						</>
+					)}
+					
+					{user && (
+						<>
+							<Route path="/Cart/" element={<CartPage />} />
 						</>
 					)}
 

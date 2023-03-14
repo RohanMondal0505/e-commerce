@@ -12,6 +12,7 @@ div.container {
 
 .dropdown-menu  {
 	text-align: center;
+	overflow: hidden;
 }
 
 .dropdown{
@@ -20,4 +21,26 @@ div.container {
 	.logout-btn{
 		width: 80%;
 	}
+}
+
+#cartCount{
+	font-size: 10px;
+	background-color: red;
+	color: #fff;
+	padding: 4px 4px;
+	vertical-align: top;
+	margin-left: -8px;
+	margin-top: -8px;
+	border-radius: -5px;
+}
+
+.badge{
+	padding-left: 9px;
+	padding-right: 9px;
+	border-radius: 9px;
+
+}
+
+.fa-shopping-cart{
+	font-size: 20px;
 }

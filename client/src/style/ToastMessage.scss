@@ -1,0 +1,14 @@
+.toast-container{
+    position: fixed !important;
+    top: 70px;
+    right: 10px;
+}
+
+@media screen and (max-width:450px) {
+    .toast-container{
+    left: 0px;
+    right: 0px;
+    width: 100%;
+}
+    
+}

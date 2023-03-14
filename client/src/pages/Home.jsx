@@ -26,7 +26,7 @@ const Home = () => {
 					className="home-banner"
 				/>
 				<div className="featured-products-container container mt-4 text-center">
-					<h2>Last products</h2>
+					<h2>Latest products</h2>
 					{/* last products here */}
 					<div className="d-flex justify-content-center flex-wrap">
 						{lastProducts.map((product) => (
