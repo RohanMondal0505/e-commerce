@@ -44,7 +44,7 @@ export const appApi = createApi({
 		removeFromCart: builder.mutation({
 			query: (body) => ({
 				url: "/products/remove-from-cart",
-				method: "DELETE",
+				method: "POST",
 				body,
 			}),
 		}),
@@ -66,6 +66,15 @@ export const appApi = createApi({
 				body,
 			}),
 		}),
+
+		//create order
+		createOrder: builder.mutation({
+			query: (body) => ({
+				url: "/orders",
+				method: "POST",
+				body,
+			}),
+		}),
 	}),
 });
 
@@ -77,6 +86,7 @@ export const {
 	useRemoveFromCartMutation,
 	useIncreaseCartProductMutation,
 	useDecreaseCartProductMutation,
+	useCreateOrderMutation
 } = appApi;
 
 export default appApi;
